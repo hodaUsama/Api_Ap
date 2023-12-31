@@ -6,9 +6,9 @@ WORKDIR .
 
 # copy csproj and restore as distinct layers
 
-COPY *.sln .
+COPY CalApi2.sln .
 
-COPY *.csproj ./CalApi2/
+COPY CalApi2.csproj ./CalApi2/
 
 RUN dotnet restore
 
