@@ -22,7 +22,7 @@ RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 WORKDIR /app
 
