@@ -1,31 +1,28 @@
 ﻿# https://hub.docker.com/_/microsoft-dotnet-core
+#first stage
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
-WORKDIR .
+WORKDIR /source
 
-# copy csproj and restore as distinct layers
+# copy csproj and restore as dependencies
 
-COPY CalApi2.sln .
-
-COPY CalApi2.csproj ./CalApi2/
+COPY *.csproj  .
 
 RUN dotnet restore
 
 # copy everything else and build app
 
-COPY . ./CalApi2/
+COPY . .
 
-WORKDIR /CalApi2
-
-RUN dotnet publish -c release -o /app --no-restore
+RUN dotnet publish -c release -o /app
 
 # final stage/image
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
 WORKDIR /app
 
-COPY --from=build /app ./
+COPY --from=build /app .
 
 ENTRYPOINT ["dotnet", "CalApi2.dll"]
